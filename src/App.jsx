@@ -4,6 +4,7 @@ import { useMovies } from './hooks/useMovies.js'
 import { Movies } from './components/Movies.jsx'
 import { useSearch } from './hooks/useSearch.js'
 import { useState } from 'react'
+import { Navbar } from './components/Navbar.jsx'
 
 
 
@@ -11,7 +12,7 @@ import { useState } from 'react'
 
 function App() {
   const [sort, setSort] = useState(false)
-  const { search, UpdateSearch, error } = useSearch()
+  const { search, updateSearch, error } = useSearch()
   const { movies, loading, getMovies } = useMovies({ search })
 
 
@@ -25,13 +26,17 @@ function App() {
   }
 
   const handleChange = (event) => {
-    UpdateSearch(event.target.value)
+
+    const newSearch = event.target.value
+    updateSearch(newSearch)
+    getMovies({ search: newSearch })
   }
 
 
   return (
 
     <div className='Page'>
+      <Navbar />
       <header>
         <h1>Buscador de peliculas</h1>
         <form className='form' onSubmit={handleSubmit}>
